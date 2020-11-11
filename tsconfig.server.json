@@ -1,0 +1,27 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 14",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",
+    "jsx": "react",
+    "module": "CommonJS",
+    "strict": true,
+    "baseUrl": "./src/server",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./server",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "allowJs": true
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "./src/client"
+  ],
+  "include": [
+    "./src/server"
+  ]
+}
