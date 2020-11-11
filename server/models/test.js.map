@@ -1,1 +1,0 @@
-{"version":3,"file":"test.js","sourceRoot":"","sources":["../../src/server/models/test.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;AAIA,MAAqB,IAAI;IAGvB,YAAY,IAAY;QAFxB,yBAAe;QAGb,uBAAA,IAAI,UAAU,IAAI,EAAC;IACrB,CAAC;IAED,IAAW,IAAI;QACb,4CAAmB;IACrB,CAAC;IAED,IAAW,IAAI,CAAC,IAAY;QAC1B,uBAAA,IAAI,UAAU,IAAI,EAAC;IACrB,CAAC;CACF;AAdD,uBAcC"}

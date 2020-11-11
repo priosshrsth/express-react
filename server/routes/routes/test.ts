@@ -1,13 +1,15 @@
 import { userInfo } from 'os';
-import router from '../router';
+import { routeLogger } from '../../bootstrap/middlewares/routeLogger';
+import Test from '../../models/test';
 
-router
-  .route('/extra')
+const testRouter = routeLogger
+  .route('/test')
   .get((req, res) => {
     res.json({ username: userInfo().username });
   })
   .post((req, res) => {
-    res.json({ text: `This is what you posted: ${req.body.text}` });
+    const { text } = new Test(`This is what you posted: ${req.body.text}`);
+    res.json({ text });
   })
   .put((req, res) => {
     res.json({ text: `I put this somewhere: ${req.body.text}` });
@@ -16,4 +18,4 @@ router
     res.json({ text: `I deleted this one : ${req.body.text}` });
   });
 
-export default router;
+export { testRouter };

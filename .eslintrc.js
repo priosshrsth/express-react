@@ -9,6 +9,9 @@ module.exports = {
     'no-console': 'off',
     'comma-dangle': 'off',
     'react/jsx-filename-extension': 'off',
+    'import/prefer-default-import': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-default-export': 'error',
     'import/extensions': [
       'off',
       // "ignorePackages"

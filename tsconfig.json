@@ -7,9 +7,9 @@
     "jsx": "react",
     "module": "ESNext",
     "sourceMap": true,
-    "outDir": "./dist/",
+    "outDir": "./dist/client",
     "skipLibCheck": true,
-    "baseUrl": "src/client",
+    "baseUrl": "./client",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,11 +21,8 @@
     "moduleResolution": "node",
     "allowJs": true
   },
-  "exclude": [
-    "./src/server"
-  ],
   "include": [
-    "./src/client/*",
-    "./src/client/types/**/*.d.ts"
+    "./client/*",
+    "./client/types/**/*.d.ts"
   ]
 }

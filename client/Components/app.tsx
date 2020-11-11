@@ -1,6 +1,8 @@
-import * as React from 'react';
-import '../Less/app.less';
-import * as ProfilePicture from '../Assets/profile.png';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
+import React, { Component } from 'react';
+import '../scss/app.scss';
+// import * as ProfilePicture from '../Assets/profile.png';
 import { apiRoute } from '../utils';
 
 interface AppStates {
@@ -12,16 +14,22 @@ interface AppStates {
   textOfDeleteTest: string;
   textForDelete: string;
 }
-export default class App extends React.Component<{}, AppStates> {
-  state: AppStates = {
-    username: '',
-    textOfPostTest: '',
-    textForPost: '',
-    textOfPutTest: '',
-    textForPut: '',
-    textOfDeleteTest: '',
-    textForDelete: '',
-  };
+
+interface AppProps {}
+
+export default class App extends Component<AppProps, AppStates> {
+  constructor(props: AppProps) {
+    super(props);
+    this.state = {
+      username: '',
+      textOfPostTest: '',
+      textForPost: '',
+      textOfPutTest: '',
+      textForPut: '',
+      textOfDeleteTest: '',
+      textForDelete: '',
+    };
+  }
 
   getUser = () => {
     fetch(apiRoute.getRoute('test'))
@@ -30,9 +38,9 @@ export default class App extends React.Component<{}, AppStates> {
   };
 
   sendUserInfo = () => {
-    const text = this.state.textOfPostTest;
+    const { textOfPostTest } = this.state;
 
-    text.trim() &&
+    if (textOfPostTest.trim()) {
       fetch(apiRoute.getRoute('test'), {
         method: 'POST',
         headers: {
@@ -40,38 +48,45 @@ export default class App extends React.Component<{}, AppStates> {
           // 'Content-Type': 'application/x-www-form -urlencoded',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify({ textOfPostTest }),
       })
         .then((res) => res.json())
         .then((res) => this.setState({ textForPost: res.text }));
+    }
   };
 
   changeUserInfo = () => {
-    this.state.textOfPutTest.trim() &&
+    const { textOfPutTest } = this.state;
+
+    if (textOfPutTest.trim()) {
       fetch(apiRoute.getRoute('test'), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ text: this.state.textOfPutTest }),
+        body: JSON.stringify({ text: textOfPutTest }),
       })
         .then((res) => res.json())
         .then((res) => this.setState({ textForPut: res.text }));
+    }
   };
 
   deleteUserInfo = () => {
-    this.state.textOfDeleteTest.trim() &&
+    const { textOfDeleteTest } = this.state;
+
+    if (textOfDeleteTest.trim()) {
       fetch(apiRoute.getRoute('test'), {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({ text: this.state.textOfDeleteTest }),
+        body: JSON.stringify({ text: textOfDeleteTest }),
       })
         .then((res) => res.json())
         .then((res) => this.setState({ textForDelete: res.text }));
+    }
   };
 
   render() {
@@ -82,14 +97,18 @@ export default class App extends React.Component<{}, AppStates> {
         <div>
           <div>
             <div>
-              <button onClick={this.getUser}>Test Get</button>
+              <button type="submit" onClick={this.getUser}>
+                Test Get Request
+              </button>
             </div>
             <label>{'Test for Get: '}</label>
             <h2>{!!username && `Hello ${username}!`}</h2>
           </div>
           <div>
             <input onChange={(e) => this.setState({ textOfPostTest: e.target.value })} placeholder={inputText} />
-            <button onClick={this.sendUserInfo}>Test Post</button>
+            <button type="submit" onClick={this.sendUserInfo}>
+              Test Post
+            </button>
           </div>
           <div>
             <label>{'Test for Post: '}</label>
@@ -97,7 +116,9 @@ export default class App extends React.Component<{}, AppStates> {
           </div>
           <div>
             <input onChange={(e) => this.setState({ textOfPutTest: e.target.value })} placeholder={inputText} />
-            <button onClick={this.changeUserInfo}>Test Put</button>
+            <button type="submit" onClick={this.changeUserInfo}>
+              Test Put
+            </button>
           </div>
           <div>
             <label>{'Test for Put: '}</label>
@@ -105,7 +126,9 @@ export default class App extends React.Component<{}, AppStates> {
           </div>
           <div>
             <input onChange={(e) => this.setState({ textOfDeleteTest: e.target.value })} placeholder={inputText} />
-            <button onClick={this.deleteUserInfo}>Test Delete</button>
+            <button type="submit" onClick={this.deleteUserInfo}>
+              Test Delete
+            </button>
           </div>
           <div>
             <label>{'Test for Delete: '}</label>

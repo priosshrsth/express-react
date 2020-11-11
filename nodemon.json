@@ -3,11 +3,11 @@
     "**/*.test.ts",
     "**/*.spec.ts",
     "node_modules",
-    "src/client"
+    "client"
   ],
   "watch": [
-    "src/server"
+    "server"
   ],
-  "exec": "tsc -p tsconfig.server.json && node server/",
+  "exec": "tsc -p server/tsconfig.json && node dist/server/server",
   "ext": "ts"
 }

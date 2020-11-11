@@ -8,20 +8,21 @@
     "jsx": "react",
     "module": "CommonJS",
     "strict": true,
-    "baseUrl": "./src/server",
+    "baseUrl": ".",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./server",
+    "outDir": "../dist/server",
     "moduleResolution": "node",
     "sourceMap": true,
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+      "middlewares/*": ["/middlewares/*"],
+      "models/*": ["/models/*"]
+    }
   },
   "compileOnSave": true,
-  "exclude": [
-    "./src/client"
-  ],
   "include": [
-    "./src/server"
+    "./"
   ]
 }

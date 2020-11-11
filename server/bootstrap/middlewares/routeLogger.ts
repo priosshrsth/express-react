@@ -4,7 +4,7 @@ interface IReqs {
   date: string;
   method: string;
   url: string;
-  body: object;
+  body: Object;
 }
 
 const router: Router = express.Router();
@@ -12,7 +12,7 @@ const router: Router = express.Router();
 const reqs: IReqs[] = [];
 
 // middleware to use for all requests
-router.use((req, res, next) => {
+const routeLogger = router.use((req, res, next) => {
   const date: Date = new Date();
   reqs.push({
     date: `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`,
@@ -26,4 +26,4 @@ router.use((req, res, next) => {
   next(); // make sure we go to the next routes and don't stop here
 });
 
-export default router;
+export { routeLogger };

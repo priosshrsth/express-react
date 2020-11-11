@@ -7,7 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const outputDirectory = 'dist';
 
 module.exports = {
-  entry: ['babel-polyfill', './src/client/index.tsx'],
+  entry: ['babel-polyfill', './client/index.tsx'],
   output: {
     path: path.join(__dirname, outputDirectory),
     filename: './js/[name].bundle.js',
@@ -37,25 +37,24 @@ module.exports = {
         loader: 'source-map-loader',
       },
       {
-        test: /\.less$/,
+        test: /\.s[ac]ss$/i,
         use: [
-          { loader: 'style-loader' },
+          'style-loader',
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: './Less',
+              publicPath: './scss',
               esModule: false,
               // hmr: process.env.NODE_ENV === 'development',
             },
           },
-          { loader: 'css-loader' },
+          'css-loader',
           {
-            loader: 'less-loader',
+            loader: 'sass-loader',
             options: {
-              lessOptions: {
-                strictMath: true,
-                noIeCompat: true,
-              },
+              // Prefer `dart-sass`
+              // eslint-disable-next-line global-require
+              implementation: require('sass'),
             },
           },
         ],
@@ -67,7 +66,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
+    extensions: ['*', '.ts', '.tsx', '.js', '.jsx', '.json', '.scss', '.sass'],
   },
   devServer: {
     port: 3000,
@@ -75,7 +74,7 @@ module.exports = {
     hot: true,
     proxy: {
       '/api/**': {
-        target: 'http://localhost:8050',
+        target: 'http://localhost:8052',
         secure: false,
         changeOrigin: true,
       },
@@ -95,7 +94,7 @@ module.exports = {
       chunkFilename: './css/[id].css',
     }),
     new CopyPlugin({
-      patterns: [{ from: './src/client/Assets', to: 'assets' }],
+      patterns: [{ from: './client/Assets', to: 'assets' }],
     }),
   ],
 };
