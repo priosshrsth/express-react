@@ -1,6 +1,8 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import setupRouter from './bootstrap/setupRouter';
+import { IErrorRequestHandler } from './@types/IRequestHandler';
+
 // import { extraRouter, testRouter } from './routes/routes';
 
 /*
@@ -18,19 +20,25 @@ create express instance
  */
 const App = express();
 
-/*
-Configure app to use bodyparser to read ajax request from post
- */
-App.use(bodyParser.json());
-App.use(bodyParser.urlencoded({ extended: true }));
+App.use(express.static('dist'));
 
 const port: number = Number(process.env.PORT) || 8052; // set our port
 
-App.use(express.static('dist'));
-App.get('/', (req, res) => {
-  console.log('sending index.html');
+setupRouter(App);
+
+App.use((req, res) => {
   res.sendFile('/dist/index.html');
 });
+
+App.use(function (err, req, res, next) {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(
+    JSON.stringify({
+      url: err.message,
+    })
+  );
+  return false;
+} as IErrorRequestHandler);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
@@ -40,14 +48,5 @@ App.get('/', (req, res) => {
 /*
 Start our server
  */
-const server = App.listen(port);
+App.listen(port);
 console.log(`App listening on ${port}`);
-
-// process.on('SIGINT', () => {
-//   process.on('SIGTERM', () => {
-//     console.log('SIGTERM signal received: closing HTTP server');
-//     server.close(() => {
-//       console.log('HTTP server closed');
-//     });
-//   });
-// });

@@ -1,18 +1,8 @@
-import express, { Router } from 'express';
-
-interface IReqs {
-  date: string;
-  method: string;
-  url: string;
-  body: Object;
-}
-
-const router: Router = express.Router();
+import { IRequestHandler, IReqs } from '../../@types/IRequestHandler';
 
 const reqs: IReqs[] = [];
 
-// middleware to use for all requests
-const routeLogger = router.use((req, res, next) => {
+const routeLogger: IRequestHandler = (req, res, next) => {
   const date: Date = new Date();
   reqs.push({
     date: `${date.toLocaleDateString()} - ${date.toLocaleTimeString()}`,
@@ -24,6 +14,6 @@ const routeLogger = router.use((req, res, next) => {
   // do logging
   console.table(reqs.length > 10 ? reqs.slice(len - 10, len).reverse() : reqs.reverse());
   next(); // make sure we go to the next routes and don't stop here
-});
+};
 
-export { routeLogger };
+export default routeLogger;
